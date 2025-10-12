@@ -1,0 +1,70 @@
+<!-- <!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>Dashboard</title>
+    </head>
+    <body>
+
+
+        <<h1>Welcome to the Dashboard, {{ name_player }}!</h1>>
+        <p>This is your dashboard where you can manage your activities.</p>
+    </body> -->
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    {% if user %}
+        <h2>Welcome, {{ user.username }}!</h2>
+        <div class="dashboard-section">
+            <h3>Level: {{ user.level }}</h3>
+            <p>XP: {{ user.xp }} / {{ user.xp_to_next_level }}</p>
+            <div class="progress-bar-container">
+                {% set xp_progress = (user.xp / user.xp_to_next_level * 100) | round(2) %}
+                <div class="progress-bar" style="width: {{ xp_progress }}%;">{{ xp_progress }}%
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>Skills</h3>
+            {% if user.skills %}
+                <ul>
+                    {% for skill_name, skill_data in user.skills.items() %}
+                        <li>
+                            <strong>{{ skill_name }}:</strong> Level {{ skill_data.level }} (XP: {{ skill_data.xp }})
+                            <div class="progress-bar-container">
+                                {% set skill_progress = skill_data.progress %} {# Assuming progress is already a percentage or 0-100 value #}
+                                <div class="progress-bar" style="width: {{ skill_progress }}%;">{{ skill_progress }}%</div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No skills added yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-section">
+            <h3>Active Quests</h3>
+            {% if user.active_quests %}
+                <ul>
+                    {% for quest in user.active_quests %}
+                        <li>
+                            <strong>{{ quest.title }}</strong> (XP Reward: {{ quest.xp_reward }}) - Status: {{ quest.status }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No active quests.</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>Please <a href="{{ url_for('login') }}">log in</a> to view your dashboard.</p>
+    {% endif %}
+{% endblock %}

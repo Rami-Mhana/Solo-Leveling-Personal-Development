@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title> {% block title %}Default Value{% endblock %}</title>
+    </head>
+    <body>
+        <h1>Welcome to the Dashboard, {{ name_player }}!</h1>
+        <p>This is your dashboard where you can manage your activities.</p>
+        {% block content %}{% endblock %} <!-- Why I need this line-->
+    </body>
+</html>
