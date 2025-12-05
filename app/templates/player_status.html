@@ -1,171 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Status</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .system-alert { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 10px 0; }
-        .quote { background-color: #e9ecef; border-left: 4px solid #6c757d; padding: 10px; margin: 10px 0; }
-        .note { background-color: #d1ecf1; border-left: 4px solid #17a2b8; padding: 10px; margin: 10px 0; }
-    </style>
-</head>
-<body>
-    <h1>Player Status</h1>
-    
-    <div class="system-alert">
-        <strong>COMMIT.</strong> No more "maybe both." Choose one to be your primary focus for the next 6-9 months. The other becomes secondary or for later. This commitment is the bedrock of focused execution.
+{% extends "base.html" %}
+{% block title %}Player Status{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Left: Core System Stats -->
+    <div class="bg-gray-800 p-4 rounded-md">
+      <h3 class="text-lg font-semibold text-white">Core Stats</h3>
+      <div class="mt-3 space-y-3">
+        {% for key, value in stats.core.items() %}
+          <div>
+            <div class="flex justify-between text-sm text-gray-300"><span class="capitalize">{{ key.replace('_',' ') }}</span><span>{{ value }}</span></div>
+            <div class="w-full h-2 bg-gray-700 rounded mt-1">
+              <div style="width: {{ (value|int) }}%" class="h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded"></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
 
-    <h2>📜 Core Stats</h2>
-    <table>
-        <tr>
-            <th>My Current XP 🚦</th>
-            <th>Current Deadline</th>
-        </tr>
-        <tr>
-            <td>+990 XP</td>
-            <td>30-8-25 Red Teaming Pro</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>28-8-25 Google Third Course MNetwork</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>24-9-25 DSA</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>30-9-25 Python SL & PD Project</td>
-        </tr>
-        <tr>
-            <th>Name Project I'm working on</th>
-            <th>Next Level</th>
-        </tr>
-        <tr>
-            <td>Red Team LLM</td>
-            <td>Lv.4</td>
-        </tr>
-        <tr>
-            <td>LMS</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>GitHub</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Python SL & PD Project</td>
-            <td></td>
-        </tr>
-        <tr>
-            <th>Total XP to Level-Up to <br>The next level</th>
-            <th>Last thing I did it</th>
-        </tr>
-        <tr>
-            <td>800 XP</td>
-            <td>Survival Project Edit</td>
-        </tr>
-        <tr>
-            <th>New Habit</th>
-            <th>Old(bad) Habit</th>
-        </tr>
-        <tr>
-            <td>Sharpen my coding skills</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Stick with the plan</td>
-            <td>Don't Stop The Fucken Video</td>
-        </tr>
-        <tr>
-            <td>Set Deadlines</td>
-            <td>Don't overthink everything</td>
-        </tr>
-        <tr>
-            <td>Wake-Up at 8:00 AM</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Focus</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Architecturral Thinking</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Let go(The past is Gone)</td>
-            <td></td>
-        </tr>
-        <tr>
-            <th>Current Tools</th>
-            <th>Hands-On Practice</th>
-        </tr>
-        <tr>
-            <td>NotebookLM</td>
-            <td>Boot.dev</td>
-        </tr>
-        <tr>
-            <td>AI Studio</td>
-            <td>Code Craft</td>
-        </tr>
-        <tr>
-            <td>LinkedIn</td>
-            <td>Code Wars</td>
-        </tr>
-        <tr>
-            <td>IDE</td>
-            <td>Overthewire<br></td>
-        </tr>
-        <tr>
-            <td>TickTick</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Obsidian</td>
-            <td></td>
-        </tr>
-    </table>
-
-    <div class="quote">
-        <p>What are you waiting for? What are you fighting for?</p>
+    <!-- Middle: Player-defined stats -->
+    <div class="bg-gray-800 p-4 rounded-md">
+      <h3 class="text-lg font-semibold text-white">Player Stats</h3>
+      <table class="w-full mt-3 text-sm text-gray-300">
+        <thead class="text-left text-xs text-gray-400">
+          <tr><th class="pb-2">Metric</th><th class="pb-2">Value</th></tr>
+        </thead>
+        <tbody>
+          {% for key, value in stats.player.items() %}
+            <tr class="border-t border-gray-700"><td class="py-2 capitalize">{{ key.replace('_',' ') }}</td><td class="py-2">{{ value }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
 
-    <div class="note">
-        <p><a href="System Explain">System Explain</a><br>
-        <a href="FOMO">FOMO</a></p>
+    <!-- Right: Summary & Actions -->
+    <div class="bg-gray-800 p-4 rounded-md">
+      <h3 class="text-lg font-semibold text-white">Summary</h3>
+      <div class="mt-3 text-sm text-gray-300">
+        <div class="flex justify-between py-1"><span>Level</span><span>{{ stats.level }}</span></div>
+        <div class="flex justify-between py-1"><span>XP</span><span>{{ stats.xp }}</span></div>
+        <div class="flex justify-between py-1"><span>Rank</span><span>{{ stats.rank }}</span></div>
+        <div class="flex justify-between py-1"><span>Active Quests</span><span>{{ stats.active_quests }}</span></div>
+        <div class="flex justify-between py-1"><span>Total Quests</span><span>{{ stats.total_quests }}</span></div>
+        <div class="flex justify-between py-1"><span>Achievements</span><span>{{ stats.achievements_count }}</span></div>
+      </div>
+
+      <div class="mt-4 space-y-2">
+        <a href="{{ url_for('main.dashboard') }}" class="block text-center px-3 py-2 bg-purple-600 rounded text-white text-sm">Open Dashboard</a>
+        <a href="{{ url_for('pd.tasks') }}" class="block text-center px-3 py-2 border border-gray-700 rounded text-gray-200 text-sm">Manage Quests</a>
+      </div>
     </div>
+  </div>
 
-    <h2>Current Skills I'm Working on</h2>
-    <table>
-        <tr>
-            <th>Current Skills I'm Working on</th>
-            <th>Category</th>
-            <th>XP</th>
-            <th>Training Platform</th>
-            <th>Total XP</th>
-            <th>Last_Activity</th>
-            <th>Status</th>
-        </tr>
-        <tr>
-            <td>Create Linked-In(Share your first post)</td>
-            <td>Job</td>
-            <td></td>
-            <td></td>
-            <td>1000</td>
-            <td></td>
-            <td>🕒</td>
-        </tr>
-        <!-- Additional rows would go here -->
-    </table>
+  <div class="mt-6 text-gray-400 text-sm">
+    <p>Notes: this page shows only the most relevant player information — core system stats (managed by the system) and player-defined metrics. Use the dashboard to manage detailed activities.</p>
+  </div>
+</div>
 
-    <!-- Additional sections for Red Teaming LLM, Prompting, Cybersecurity Tools, etc. -->
-    
-</body>
-</html>
+{% endblock %}

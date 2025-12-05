@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block title %}Hunter Profile - Solo Leveling{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto py-10 px-4">
+  <div class="bg-gray-800 shadow-2xl rounded-2xl p-8 border border-purple-500/20">
+    <!-- Header -->
+    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+      <div class="flex items-center gap-6">
+        <div class="relative">
+            <div class="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center text-white text-4xl font-bold">
+            {{ current_user.username[0] | upper }}
+          </div>
+          <div class="absolute -bottom-3 -right-3 w-8 h-8 rounded-lg bg-gray-900 border-2 border-purple-500 flex items-center justify-center">
+            <i class="fas fa-camera text-purple-400 hover:text-purple-300 cursor-pointer"></i>
+          </div>
+        </div>
+        <div>
+          <h2 class="text-3xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+            {{ current_user.username }}
+          </h2>
+          <p class="text-gray-400 flex items-center gap-2 mt-1">
+            <i class="fas fa-envelope"></i>
+            {{ current_user.email }}
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col items-end gap-2">
+        <span class="px-4 py-2 text-lg rounded-lg {{ 
+          'bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold' if current_user.rank == 'S-Rank Hunter' 
+          else 'bg-gray-700 text-gray-300' }}">
+          {{ current_user.rank }}
+        </span>
+        <div class="text-sm text-gray-400">Member since {{ current_user.created_at.strftime('%B %Y') }}</div>
+      </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Character Stats -->
+      <div class="lg:col-span-2">
+        <div class="bg-gray-700/50 rounded-xl p-6 border border-purple-500/10">
+          <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+            <i class="fas fa-chart-line text-purple-400"></i>
+            Hunter Statistics
+          </h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+            <div class="bg-gray-800/50 rounded-lg p-4 border border-purple-500/10">
+              <div class="text-sm text-gray-400">Level</div>
+              <div class="text-2xl font-bold text-white mt-1" data-user-level>{{ current_user.level }}</div>
+              <div class="text-xs text-purple-400 mt-1">+2 this week</div>
+            </div>
+            <div class="bg-gray-800/50 rounded-lg p-4 border border-purple-500/10">
+              <div class="text-sm text-gray-400">Total XP</div>
+              <div class="text-2xl font-bold text-white mt-1">{{ current_user.xp }}</div>
+              <div class="text-xs text-purple-400 mt-1">Next level: {{ 1000 - (current_user.xp % 1000) }} XP</div>
+            </div>
+            <div class="bg-gray-800/50 rounded-lg p-4 border border-purple-500/10">
+              <div class="text-sm text-gray-400">Quests</div>
+              <div class="text-2xl font-bold text-white mt-1">{{ current_user.quests_completed }}</div>
+              <div class="text-xs text-purple-400 mt-1">{{ current_user.quests_completed }} completed</div>
+            </div>
+          </div>
+
+          <!-- Detailed Stats -->
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-gray-300">
+                  <i class="fas fa-fist-raised mr-2 text-red-500"></i>Strength
+                </span>
+                <span class="text-sm text-gray-400 stat-value">{{ current_user.strength }}/100</span>
+              </div>
+              <div class="w-full bg-gray-800 rounded-lg h-3 border border-gray-700">
+                <div data-stat="strength" class="h-full rounded-lg bg-gradient-to-r from-red-500 to-red-600" 
+                     style="width: {{ current_user.strength }}%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-gray-300">
+                  <i class="fas fa-brain mr-2 text-blue-500"></i>Intelligence
+                </span>
+                <span class="text-sm text-gray-400 stat-value">{{ current_user.intelligence }}/100</span>
+              </div>
+              <div class="w-full bg-gray-800 rounded-lg h-3 border border-gray-700">
+                <div data-stat="intelligence" class="h-full rounded-lg bg-gradient-to-r from-blue-500 to-blue-600" 
+                     style="width: {{ current_user.intelligence }}%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-gray-300">
+                  <i class="fas fa-wind mr-2 text-green-500"></i>Agility
+                </span>
+                <span class="text-sm text-gray-400 stat-value">{{ current_user.agility }}/100</span>
+              </div>
+              <div class="w-full bg-gray-800 rounded-lg h-3 border border-gray-700">
+                <div data-stat="agility" class="h-full rounded-lg bg-gradient-to-r from-green-500 to-green-600" 
+                     style="width: {{ current_user.agility }}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Profile Form -->
+      <div class="bg-gray-700/50 rounded-xl p-6 border border-purple-500/10">
+        <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+          <i class="fas fa-user-edit text-purple-400"></i>
+          Edit Profile
+        </h3>
+        <form method="POST" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-1">Username</label>
+            <input name="username" 
+                   value="{{ current_user.username }}" 
+                   required 
+                   class="w-full bg-gray-800 border border-purple-500/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-colors" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+            <input name="email" 
+                   type="email" 
+                   value="{{ current_user.email }}" 
+                   required 
+                   class="w-full bg-gray-800 border border-purple-500/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-colors" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-1">New Password</label>
+            <input name="password" 
+                   type="password" 
+                   placeholder="Leave blank to keep existing" 
+                   class="w-full bg-gray-800 border border-purple-500/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-colors" />
+          </div>
+          <div class="flex justify-end pt-4">
+            <button type="submit" 
+                    class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium rounded-lg
+                           hover:from-purple-500 hover:to-pink-500 transition-all duration-200 shadow-lg shadow-purple-500/25
+                           flex items-center gap-2">
+              <i class="fas fa-save"></i>
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

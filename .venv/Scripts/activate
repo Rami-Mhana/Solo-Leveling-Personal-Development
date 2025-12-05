@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\ASUS\Desktop\Code\Flask Training\.venv"
+VIRTUAL_ENV="C:\Users\ASUS\Desktop\Code\Solo Leveling & Personal Development\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

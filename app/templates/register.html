@@ -1,19 +1,48 @@
 {% extends "base.html" %}
-
-{% block title %}Register{% endblock %}
+{% block title %}Register - Solo Leveling{% endblock %}
 
 {% block content %}
-    <h2>Register</h2>
-    <form method="POST">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="hidden md:flex flex-col justify-center p-6 rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 text-white">
+            <h3 class="text-2xl font-semibold">Start Your Journey</h3>
+            <p class="mt-3 text-sm text-gray-200">Create an account to begin your Solo Leveling Personal Development quests — track XP, collect achievements, and build habits.</p>
+            <ul class="mt-4 space-y-2 text-sm">
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-300"></i> Track XP & levels</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-300"></i> Create quests & habits</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-300"></i> Earn achievements</li>
+            </ul>
         </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-lg font-semibold text-gray-800">Create your hunter account</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="mt-3 rounded-md p-3 text-sm {% if category == 'danger' %}bg-red-50 text-red-800{% else %}bg-green-50 text-green-800{% endif %}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" class="mt-4 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Username</label>
+                    <input name="username" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500" placeholder="Choose a username">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input name="email" type="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500" placeholder="you@example.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Password</label>
+                    <input name="password" type="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500" placeholder="Create a strong password">
+                </div>
+                <div>
+                    <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-purple-600 to-pink-600">Sign Up</button>
+                </div>
+                <div class="text-sm text-center text-gray-500">Already a hunter? <a href="{{ url_for('main.login') }}" class="text-purple-600">Log in</a></div>
+            </form>
         </div>
-        <button type="submit" class="btn">Register</button>
-    </form>
-    <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
+    </div>
+</div>
 {% endblock %}

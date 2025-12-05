@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Character Stats Card -->
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0">{{ user.username }}</h3>
+                    <p class="mb-0">{{ user.rank }}</p>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Level:</span>
+                        <span class="font-weight-bold" data-user-level>{{ user.level }}</span>
+                    </div>
+                    {% set xp_mod = user.xp % 1000 if user.xp else 0 %}
+                    {% set xp_progress = (xp_mod / 1000 * 100) if xp_mod is not none else 0 %}
+                    <div class="progress mb-3">
+                        <div class="progress-bar bg-success" role="progressbar" data-xp-bar style="width: {{ xp_progress }}%">
+                            XP: <span data-xp-text>{{ xp_mod }}</span>/1000
+                        </div>
+                    </div>
+                    <h5 class="mt-4">Core Stats</h5>
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span>Strength</span>
+                            <div class="progress">
+                                <div class="progress-bar" data-stat="strength" style="width: {{ user.strength }}%">{{ user.strength }}</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>Intelligence</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-info" data-stat="intelligence" style="width: {{ user.intelligence }}%">{{ user.intelligence }}</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>Agility</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" data-stat="agility" style="width: {{ user.agility }}%">{{ user.agility }}</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>Willpower</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" data-stat="willpower" style="width: {{ user.willpower }}%">{{ user.willpower }}</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>Discipline</span>
+                            <div class="progress">
+                                <div class="progress-bar bg-purple" data-stat="discipline" style="width: {{ user.discipline }}%">{{ user.discipline }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Quests -->
+        <div class="col-md-8">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0">Active Quests</h3>
+                </div>
+                <div class="card-body">
+                    {% if quests %}
+                        {% for quest in quests %}
+                        <div class="quest-item mb-3 p-3 border rounded">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">{{ quest.title }}</h5>
+                                <span class="badge badge-{{ quest.difficulty|lower }}">{{ quest.difficulty }}-Rank</span>
+                            </div>
+                            <p class="text-muted mb-2">{{ quest.description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small>XP Reward: {{ quest.xp_reward }}</small>
+                                <button class="btn btn-sm btn-success complete-quest" data-quest-id="{{ quest.id }}">Complete</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-center">No active quests. Time to start a new journey!</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0">Achievements</h3>
+                </div>
+                <div class="card-body">
+                    <div class="achievement-grid">
+                        {% if achievements %}
+                            {% for achievement in achievements %}
+                            <div class="achievement-item {{ 'achieved' if achievement.achieved }}">
+                                <i class="fas {{ achievement.icon }} fa-2x"></i>
+                                <h6>{{ achievement.title }}</h6>
+                                <small>{{ achievement.description }}</small>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-center">No achievements yet. Keep pushing forward!</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom styles -->
+<style>
+.stat-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.stat-item span {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+    text-align: center;
+}
+
+.achievement-item {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    opacity: 0.5;
+}
+
+.achievement-item.achieved {
+    opacity: 1;
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.badge-e { background-color: #6c757d; }
+.badge-d { background-color: #28a745; }
+.badge-c { background-color: #17a2b8; }
+.badge-b { background-color: #ffc107; }
+.badge-a { background-color: #dc3545; }
+.badge-s { background-color: #9932cc; }
+
+.bg-purple { background-color: #9932cc; }
+</style>
+{% endblock %}

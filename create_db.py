@@ -1,45 +1,33 @@
-# create_db.py (project root)
-from app.market import create_app, db  # adjust import if create_app lives elsewhere
-# What is create_app ?
-import os # OS Module(Not a class, it's a fucken whole file I think!)
+"""Create and seed the database for local development.
 
-app = create_app()
+Usage:
+    python create_db.py
 
-with app.app_context():
-    # import your models so SQLAlchemy knows about them
-    # e.g. from app.market import models   OR  from app import models
-    # replace the line below with the correct import for your project
-    try:
-        from app.market import models
-    except Exception:
-        pass
-    # Does this mean that in all cases create the .db file(database)? Because will have an exception but we will pass!
-    db.create_all()
-    print("database created (sqlite file should appear in your project folder)")
+This will create the SQLite DB defined by the app factory and insert a demo
+user. Run this once after setting up the virtualenv.
+"""
+from app import create_app
+from app.models import db, User
 
-    """
-    Or I should put this:
-    
+
+def seed(app):
     with app.app_context():
-    # import your models so SQLAlchemy knows about them
-    # e.g. from app.market import models   OR  from app import models
-    # replace the line below with the correct import for your project
-    try:
-        from app.market import models
+        # Drop and recreate tables to ensure schema matches models during development
+        db.drop_all()
         db.create_all()
-        print("database created (sqlite file should appear in your project folder)")
 
-    except Exception:
-        print("Not working")
-        pass
-
-    """
-
-    print("SQLALCHEMY_DATABASE_URI =", app.config.get("SQLALCHEMY_DATABASE_URI"))
-    print("current working dir (cwd)   =", os.getcwd())
-    print("Flask instance_path         =", app.instance_path)
-    db.create_all()
-    print("done — DB created where above URI indicates")
+        if not User.query.filter_by(username='testuser').first():
+            u = User(username='testuser', email='testuser@example.com')
+            u.set_password('password')
+            db.session.add(u)
+            db.session.commit()
+            print('Created demo user testuser with password "password"')
+        else:
+            print('Demo user already exists')
 
 
+if __name__ == '__main__':
+    app = create_app()
+    seed(app)
     
+
