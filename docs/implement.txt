@@ -1,0 +1,8 @@
+                                                        |                                |            |           |           |            |      | ✅❌🕒🌫   |        |           |
+# Steps:
+Patch the project structure
+Build the home page 
+Build the routeing and modules pages etc.
+Build the registration page for the login and sign-up process.
+Save data to `SQLAlechemy .db file`
+The navigation part on our website, and this should be on the base file because all the files will inherent from it.

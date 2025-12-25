@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Player Status{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Left: Core System Stats -->
+    <div class="bg-gray-800 p-4 rounded-md">
+      <h3 class="text-lg font-semibold text-white">Core Stats</h3>
+      <div class="mt-3 space-y-3">
+        {% for key, value in stats.core.items() %}
+          <div>
+            <div class="flex justify-between text-sm text-gray-300"><span class="capitalize">{{ key.replace('_',' ') }}</span><span>{{ value }}</span></div>
+            <div class="w-full h-2 bg-gray-700 rounded mt-1">
+              <div style="width: {{ (value|int) }}%" class="h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded"></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Middle: Player-defined stats -->
+    <div class="bg-gray-800 p-4 rounded-md">
+      <h3 class="text-lg font-semibold text-white">Player Stats</h3>
+      <table class="w-full mt-3 text-sm text-gray-300">
+        <thead class="text-left text-xs text-gray-400">
+          <tr><th class="pb-2">Metric</th><th class="pb-2">Value</th></tr>
+        </thead>
+        <tbody>
+          {% for key, value in stats.player.items() %}
+            <tr class="border-t border-gray-700"><td class="py-2 capitalize">{{ key.replace('_',' ') }}</td><td class="py-2">{{ value }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Right: Summary & Actions -->
+    <div class="bg-gray-800 p-4 rounded-md">
+      <h3 class="text-lg font-semibold text-white">Summary</h3>
+      <div class="mt-3 text-sm text-gray-300">
+        <div class="flex justify-between py-1"><span>Level</span><span>{{ stats.level }}</span></div>
+        <div class="flex justify-between py-1"><span>XP</span><span>{{ stats.xp }}</span></div>
+        <div class="flex justify-between py-1"><span>Rank</span><span>{{ stats.rank }}</span></div>
+        <div class="flex justify-between py-1"><span>Active Quests</span><span>{{ stats.active_quests }}</span></div>
+        <div class="flex justify-between py-1"><span>Total Quests</span><span>{{ stats.total_quests }}</span></div>
+        <div class="flex justify-between py-1"><span>Achievements</span><span>{{ stats.achievements_count }}</span></div>
+      </div>
+
+      <div class="mt-4 space-y-2">
+        <a href="{{ url_for('main.dashboard') }}" class="block text-center px-3 py-2 bg-purple-600 rounded text-white text-sm">Open Dashboard</a>
+        <a href="{{ url_for('pd.tasks') }}" class="block text-center px-3 py-2 border border-gray-700 rounded text-gray-200 text-sm">Manage Quests</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 text-gray-400 text-sm">
+    <p>Notes: this page shows only the most relevant player information — core system stats (managed by the system) and player-defined metrics. Use the dashboard to manage detailed activities.</p>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,250 @@
+/* Solo Leveling Theme Colors - Enhanced Gaming Theme */
+:root {
+    --sl-purple: #9932cc;
+    --sl-blue: #4a90e2;
+    --sl-dark: #121212;
+    --sl-darker: #0a0a0a;
+    --sl-light: #2a2a2a;
+    --sl-text: #e1e1e1;
+    --sl-highlight: #6b21a8;
+    --rank-e: #6c757d;
+    --rank-d: #28a745;
+    --rank-c: #17a2b8;
+    --rank-b: #ffc107;
+    --rank-a: #dc3545;
+    --rank-s: var(--sl-purple);
+    
+    /* Game UI Colors */
+    --health: #ff4757;
+    --mana: #2e86de;
+    --exp: #ffd32a;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--sl-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sl-purple);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--sl-highlight);
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--sl-darker);
+    color: var(--sl-text);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: var(--sl-dark);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.header {
+    background: linear-gradient(135deg, var(--sl-purple) 0%, var(--sl-highlight) 100%);
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* Game UI Components */
+.game-btn {
+    background: linear-gradient(135deg, var(--sl-purple) 0%, var(--sl-highlight) 100%);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(153, 50, 204, 0.3);
+}
+
+.game-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(153, 50, 204, 0.4);
+}
+
+.game-btn:active {
+    transform: translateY(0);
+}
+
+.game-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.game-btn:hover::after {
+    opacity: 1;
+}
+
+/* Alert/Notification Styles */
+.alert {
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid;
+}
+
+.alert i {
+    margin-right: 12px;
+    font-size: 20px;
+}
+
+.alert-success {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+    border-color: #2ecc71;
+}
+
+.alert-danger {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.alert-info {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+    border-color: #3498db;
+}
+
+/* Game Card Styles */
+.game-card {
+    background: var(--sl-dark);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(153, 50, 204, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        var(--sl-purple) 0%, 
+        var(--sl-highlight) 50%,
+        var(--sl-purple) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.game-card:hover::before {
+    opacity: 1;
+}
+
+.game-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(153, 50, 204, 0.15);
+    border-color: rgba(153, 50, 204, 0.4);
+}
+
+/* Progress Bar Animations */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.progress-glow {
+    animation: pulse 2s infinite;
+}
+
+.dashboard-section {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.progress-bar-container {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    height: 20px;
+    margin-top: 5px;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #28a745; /* Green */
+    width: 0%; /* Will be set dynamically */
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    line-height: 20px;
+    font-size: 0.8em;
+}

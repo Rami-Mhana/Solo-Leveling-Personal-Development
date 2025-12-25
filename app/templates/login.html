@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Login - Solo Leveling{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full bg-white rounded-lg shadow-md p-6">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-12 h-12 rounded bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white text-xl">
+        <i class="fas fa-dragon"></i>
+      </div>
+      <div>
+        <h2 class="text-lg font-semibold text-gray-800">Welcome back, Hunter</h2>
+        <p class="text-sm text-gray-500">Sign in to continue your Solo Leveling journey</p>
+      </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="mb-3 rounded-md p-3 text-sm {% if category == 'danger' %}bg-red-50 text-red-800{% else %}bg-green-50 text-green-800{% endif %}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="space-y-4">
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+        <div class="mt-1 relative">
+          <input id="username" name="username" type="text" required
+                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm" placeholder="Your username">
+        </div>
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <div class="mt-1 relative">
+          <input id="password" name="password" type="password" required
+                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 sm:text-sm" placeholder="Password">
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 focus:outline-none">Sign in</button>
+      </div>
+
+      <div class="text-center text-sm text-gray-500">
+        Don't have an account? <a href="{{ url_for('main.register') }}" class="text-purple-600 font-medium">Register</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

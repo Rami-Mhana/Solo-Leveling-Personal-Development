@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto py-6">
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-semibold text-white">Personal Development Quests</h2>
+        <button x-data @click="$dispatch('toggle-new-quest')" class="inline-flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-md text-sm"> 
+            <i class="fas fa-plus"></i> New Quest
+        </button>
+    </div>
+
+    <!-- New Quest collapsible panel (Alpine event handled locally) -->
+    <div x-data="{ open: false }" x-on:toggle-new-quest.window="open = !open" class="mb-6">
+        <div x-show="open" x-transition class="bg-gray-800 p-4 rounded-md">
+            <form id="newTaskForm" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <input name="title" placeholder="Title" required class="col-span-2 px-3 py-2 rounded bg-gray-900 border border-gray-700 text-white">
+                <select name="difficulty" class="px-3 py-2 rounded bg-gray-900 border border-gray-700 text-white">
+                    <option value="E">E-Rank</option>
+                    <option value="D">D-Rank</option>
+                    <option value="C">C-Rank</option>
+                    <option value="B">B-Rank</option>
+                    <option value="A">A-Rank</option>
+                    <option value="S">S-Rank</option>
+                </select>
+                <textarea name="description" placeholder="Short description" class="col-span-3 md:col-span-2 px-3 py-2 rounded bg-gray-900 border border-gray-700 text-white"></textarea>
+                <select name="quest_type" class="px-3 py-2 rounded bg-gray-900 border border-gray-700 text-white">
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="achievement">Achievement</option>
+                </select>
+                <input name="deadline" type="date" class="px-3 py-2 rounded bg-gray-900 border border-gray-700 text-white">
+                <div class="col-span-3 text-right">
+                    <button type="button" id="saveQuest" class="px-4 py-2 bg-green-600 rounded text-white text-sm">Create Quest</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quests grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+            <h3 class="text-lg font-medium text-white mb-2">Daily</h3>
+            <div class="space-y-3">
+                {% if daily_quests %}
+                    {% for quest in daily_quests %}
+                        <div class="p-3 bg-gray-800 rounded-md">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h4 class="text-white font-semibold">{{ quest.title }}</h4>
+                                    <p class="text-sm text-gray-400">{{ quest.description }}</p>
+                                </div>
+                                <div class="text-right text-sm text-gray-400">
+                                    <div>XP: {{ quest.xp_reward }}</div>
+                                    <div class="mt-2">
+                                        {% if not quest.completed %}
+                                            <button @click="fetch('/pd/tasks/{{ quest.id }}/complete', {method: 'POST'}) .then(r=>r.json()).then(()=> location.reload())" class="px-3 py-1 bg-green-600 rounded text-white text-xs">Complete</button>
+                                        {% else %}
+                                            <span class="text-green-400">Completed</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="p-3 bg-gray-800 rounded text-gray-400">No daily quests.</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-lg font-medium text-white mb-2">Weekly</h3>
+            <div class="space-y-3">
+                {% if weekly_quests %}
+                    {% for quest in weekly_quests %}
+                        <div class="p-3 bg-gray-800 rounded-md">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h4 class="text-white font-semibold">{{ quest.title }}</h4>
+                                    <p class="text-sm text-gray-400">{{ quest.description }}</p>
+                                </div>
+                                <div class="text-right text-sm text-gray-400">
+                                    <div>XP: {{ quest.xp_reward }}</div>
+                                    <div class="mt-2">
+                                        {% if not quest.completed %}
+                                            <button @click="fetch('/pd/tasks/{{ quest.id }}/complete', {method: 'POST'}) .then(r=>r.json()).then(()=> location.reload())" class="px-3 py-1 bg-green-600 rounded text-white text-xs">Complete</button>
+                                        {% else %}
+                                            <span class="text-green-400">Completed</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="p-3 bg-gray-800 rounded text-gray-400">No weekly quests.</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-lg font-medium text-white mb-2">Achievements</h3>
+            <div class="space-y-3">
+                {% if achievement_quests %}
+                    {% for quest in achievement_quests %}
+                        <div class="p-3 bg-gray-800 rounded-md">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <h4 class="text-white font-semibold">{{ quest.title }}</h4>
+                                    <p class="text-sm text-gray-400">{{ quest.description }}</p>
+                                </div>
+                                <div class="text-right text-sm text-gray-400">
+                                    <div>XP: {{ quest.xp_reward }}</div>
+                                    <div class="mt-2">
+                                        {% if not quest.completed %}
+                                            <button @click="fetch('/pd/tasks/{{ quest.id }}/complete', {method: 'POST'}) .then(r=>r.json()).then(()=> location.reload())" class="px-3 py-1 bg-green-600 rounded text-white text-xs">Complete</button>
+                                        {% else %}
+                                            <span class="text-green-400">Completed</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="p-3 bg-gray-800 rounded text-gray-400">No achievement quests.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const saveBtn = document.getElementById('saveQuest');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', function() {
+            const form = document.getElementById('newTaskForm');
+            const fd = new FormData(form);
+            const data = Object.fromEntries(fd.entries());
+
+            fetch('{{ url_for('pd.create_task') }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(r => r.json()).then(resp => {
+                if (resp.quest_id) {
+                    // small UX: reload to show created quest
+                    location.reload();
+                } else if (resp.message) {
+                    alert(resp.message);
+                }
+            }).catch(err => console.error(err));
+        });
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

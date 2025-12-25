@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}Daily Pro-Action Report - Solo Leveling{% endblock %}
+
+{% block content %}
+<div class="bg-gray-900 min-h-screen py-6 sm:py-8">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mb-6">
+      <h1 class="text-4xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 mb-2">
+        Daily Pro-Action Report
+      </h1>
+      <p class="text-gray-400">Reflect on your day and plan for tomorrow. Earn 50 XP for completing this report.</p>
+    </div>
+
+    <!-- Form Container -->
+    <div class="bg-gray-800 rounded-lg border border-purple-500/20 shadow-lg overflow-hidden">
+      <div class="px-6 sm:px-8 py-6">
+        <!-- Date Display -->
+        <div class="mb-6 pb-4 border-b border-gray-700">
+          <p class="text-gray-400 text-sm">Today's Report</p>
+          <p class="text-2xl font-bold text-white mt-1" id="current-date"></p>
+        </div>
+
+        <!-- Form -->
+        <form method="POST" class="space-y-6">
+          <!-- The Win -->
+          <div>
+            <label for="the_win" class="block text-lg font-semibold text-white mb-2">
+              <i class="fas fa-trophy text-yellow-500 mr-2"></i>The Win
+            </label>
+            <p class="text-sm text-gray-400 mb-3">What went well today? What are you proud of?</p>
+            <textarea
+              id="the_win"
+              name="the_win"
+              required
+              placeholder="Share your win from today..."
+              class="w-full px-4 py-3 bg-gray-900 border border-purple-500/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/10 resize-none"
+              rows="3"
+            ></textarea>
+            <p class="text-xs text-gray-500 mt-2">Celebrate your progress, no matter how small.</p>
+          </div>
+
+          <!-- The Lesson -->
+          <div>
+            <label for="the_lesson" class="block text-lg font-semibold text-white mb-2">
+              <i class="fas fa-lightbulb text-blue-400 mr-2"></i>The Lesson
+            </label>
+            <p class="text-sm text-gray-400 mb-3">What did you learn or struggle with today?</p>
+            <textarea
+              id="the_lesson"
+              name="the_lesson"
+              required
+              placeholder="Share a lesson or challenge you faced..."
+              class="w-full px-4 py-3 bg-gray-900 border border-purple-500/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/10 resize-none"
+              rows="3"
+            ></textarea>
+            <p class="text-xs text-gray-500 mt-2">Growth comes from reflection and learning.</p>
+          </div>
+
+          <!-- The Plan -->
+          <div>
+            <label for="the_plan" class="block text-lg font-semibold text-white mb-2">
+              <i class="fas fa-map text-green-400 mr-2"></i>The Plan
+            </label>
+            <p class="text-sm text-gray-400 mb-3">What will you focus on tomorrow?</p>
+            <textarea
+              id="the_plan"
+              name="the_plan"
+              required
+              placeholder="What's your plan for tomorrow?..."
+              class="w-full px-4 py-3 bg-gray-900 border border-purple-500/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/10 resize-none"
+              rows="3"
+            ></textarea>
+            <p class="text-xs text-gray-500 mt-2">Set intentions and stay focused on your goals.</p>
+          </div>
+
+          <!-- XP Reward Notice -->
+          <div class="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-lg p-4">
+            <div class="flex items-center">
+              <i class="fas fa-star text-yellow-500 text-2xl mr-3"></i>
+              <div>
+                <p class="text-white font-semibold">XP Reward</p>
+                <p class="text-gray-400 text-sm">Earn 50 XP for completing your daily report!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex gap-4 pt-4">
+            <button
+              type="submit"
+              class="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              <i class="fas fa-check"></i> Submit Report & Earn XP
+            </button>
+            <a
+              href="{{ url_for('main.dashboard') }}"
+              class="flex-1 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center"
+            >
+              <i class="fas fa-times"></i> Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-gray-800 rounded-lg border border-gray-700 p-6">
+        <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+          <i class="fas fa-exclamlamation text-red-500"></i> Pro Tip
+        </h3>
+        <p class="text-gray-400 text-sm">Be honest and specific. The more detail you provide, the more you'll benefit from your reflection.</p>
+      </div>
+      <div class="bg-gray-800 rounded-lg border border-gray-700 p-6">
+        <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+          <i class="fas fa-clock text-blue-400"></i> Best Time
+        </h3>
+        <p class="text-gray-400 text-sm">Complete this report at the end of your day for maximum clarity and impact on tomorrow's planning.</p>
+      </div>
+      <div class="bg-gray-800 rounded-lg border border-gray-700 p-6">
+        <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+          <i class="fas fa-fire text-yellow-500"></i> Streak
+        </h3>
+        <p class="text-gray-400 text-sm">Maintain a streak of daily reports to stay accountable and build momentum in your goals.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Display current date
+  document.addEventListener('DOMContentLoaded', () => {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const today = new Date().toLocaleDateString('en-US', options);
+    document.getElementById('current-date').textContent = today;
+  });
+</script>
+{% endblock %}

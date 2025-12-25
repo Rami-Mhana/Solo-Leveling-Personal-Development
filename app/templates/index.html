@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Home - Solo Levelling PD{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="jumbotron text-center bg-dark text-white">
+        <h1 class="display-4">Welcome, Hunter!</h1>
+        <p class="lead">Solo Levelling for Personal Development. Level up your life, one quest at a time.</p>
+        <hr class="my-4" style="border-color: #4361ee;">
+        <p>Your journey to mastery starts now. Track your skills, manage your quests, and become an S-Rank developer.</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('main.register') }}" role="button" style="background-color: #4361ee; border-color: #4361ee;">Start Your Quest</a>
+        <a class="btn btn-secondary btn-lg" href="{{ url_for('main.login') }}" role="button" style="margin-left: 10px; background-color: #6c757d; border-color: #6c757d;">Login</a>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark text-white border-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Personal Dashboard</h5>
+                    <p class="card-text">Monitor your progress, XP, and current level.</p>
+                    <a href="{{ url_for('main.dashboard') }}" class="btn btn-sm btn-outline-primary">View Dashboard</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark text-white border-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Skill Mastery</h5>
+                    <p class="card-text">Define skills like Coding, Hacking, and track their levels.</p>
+                    <a href="{{ url_for('main.player_status') }}" class="btn btn-sm btn-outline-primary">Check Stats</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark text-white border-primary">
+                <div class="card-body">
+                    <h5 class="card-title">The Market</h5>
+                    <p class="card-text">Exchange your hard-earned 'Gold' for courses or tools.</p>
+                    <a href="{{ url_for('main.market') }}" class="btn btn-sm btn-outline-primary">Enter Market</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

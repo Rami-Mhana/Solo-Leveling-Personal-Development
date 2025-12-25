@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Market Page
+{% endblock %}
+
+
+
+{% block content %}
+    <h1 class="text-primary">Market Page!</h1>
+    <p>This is the market page content.</p>
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Item Name</th> <!-- table header cell-->
+                <th scope="col">Price</th>
+                <th scope="col">Barcode</th>
+                <th scope="col">Description</th>
+                <th scope="col">Buy</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.name }}</td> <!-- table data cell-->
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.barcode }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>
+                        <form action="/purchase/{{ item.id }}" method="post">
+                            <button type="submit" class="btn btn-primary btn-sm">Buy</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Sell</button>
+                        </form>
+
+                    </td>
+                </tr>
+            
+            {% endfor %}
+
+        </tbody>
+
+        
+    </table>
+
+{% endblock %}
